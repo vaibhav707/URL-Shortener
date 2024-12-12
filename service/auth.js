@@ -1,5 +1,4 @@
-const jwt = require("jsonwebtoken");
-const secret = "Demongod$123$";
+const sessionIdUser = new Map();
 
 function setUser(user) {
     return jwt.sign({
