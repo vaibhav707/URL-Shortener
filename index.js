@@ -1,7 +1,7 @@
 const express = require("express");
 const {connectDB} = require("./connect")
 const cookieParser = require("cookie-parser")
-const { restrictToLogged, checkAuth } = require("./middlewares/auth")
+const { checkForAuth, restrictTo } = require("./middlewares/auth")
 
 const urlRoute = require("./routes/url")
 const staticRoute = require("./routes/staticRouter")
@@ -24,9 +24,10 @@ app.set("views", path.resolve("./views"));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
+app.use(checkForAuth);
 
-app.use("/", checkAuth, staticRoute);
-app.use("/url", restrictToLogged, urlRoute);
+app.use("/", staticRoute);
+app.use("/url", restrictTo(["NORMAL","ADMIN"]), urlRoute);
 app.use("/user", userRoute);
 
 app.get("/test", async(req, res) => {
