@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-
 const secret = "Demongod$123$";
 
 function setUser(user) {
